@@ -36,7 +36,7 @@ Examples:
 
     # Read from YAML
     try:
-        stream = open(parsed_args.config, "r")
+        stream = open(parsed_args.config, "r", encoding='utf-8')
         yconfig = yaml.load(stream)
     except Exception as e:
         log.critical("[!] Unhandled exception: %s" % str(e))
