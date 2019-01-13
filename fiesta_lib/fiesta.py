@@ -13,6 +13,9 @@ def main():
     from .api import run_console, GlobalParameters
     import yaml
 
+    log.warning("[!] This tool is not longer supported. Please check the new version ported to Golang: https://github.com/jselvi/fiesta")
+    log.warning("[!] If you are sure you want to use this version right now, please add the --deprecated flag to your command line")
+
     examples = '''
 Examples:
 
@@ -28,12 +31,17 @@ Examples:
     parser.add_argument("-v", "--verbosity", dest="verbose", action="count", help="verbosity level: -v, -vv, -vvv.", default=0)
     parser.add_argument("-c", "--curses", dest="curses", action="store_true", help="Curses output", default=False)
     parser.add_argument("--dev", dest="dev", action="store_true", help="Developer mode", default=False)
+    parser.add_argument("--deprecated", dest="deprecated", action="store_false", help="Bypass the deprecated warning message", default=True)
 
     parsed_args = parser.parse_args()
 
     # Configure global log
     log.setLevel(abs(5 - parsed_args.verbose) % 5)
 
+    # Show deprecated warning message
+    if parsed_args.deprecated:
+        return
+    
     # Read from YAML
     try:
         stream = open(parsed_args.config, "r", encoding='utf-8')
